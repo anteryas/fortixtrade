@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr" class="dark">
+<html lang="tr" class="dark scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NexusTrade | Kurumsal Algoritmik Sermaye Mimarisi</title>
-  <!-- Tailwind CSS CDN (Tamamen Ücretsiz) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -12,10 +11,13 @@
       theme: {
         extend: {
           colors: {
-            brandDark: '#0B0E14',
-            brandCard: '#121824',
+            brandDark: '#07090E',
+            brandSurface: '#0E131F',
+            brandCard: '#141B2D',
+            brandBorder: '#1F293D',
             brandCyan: '#00F2FE',
-            brandGreen: '#10B981'
+            brandGreen: '#10B981',
+            brandRed: '#EF4444'
           }
         }
       }
@@ -24,108 +26,288 @@
 </head>
 <body class="bg-brandDark text-slate-100 font-sans antialiased selection:bg-brandCyan selection:text-black min-h-screen">
 
-  <!-- Navigasyon -->
-  <nav class="border-b border-slate-800 bg-brandDark/80 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <div class="w-3 h-3 rounded-full bg-brandCyan shadow-[0_0_12px_#00F2FE]"></div>
-        <span class="text-xl font-bold tracking-wider text-white">NEXUS<span class="text-brandCyan">TRADE</span></span>
+  <!-- Üst Navigasyon -->
+  <nav class="border-b border-brandBorder bg-brandDark/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-3.5 h-3.5 rounded-full bg-brandCyan shadow-[0_0_15px_#00F2FE]"></div>
+        <span class="text-xl font-extrabold tracking-wider text-white">NEXUS<span class="text-brandCyan">TRADE</span></span>
       </div>
-      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
-        <a href="#felsefe" class="hover:text-white transition">Felsefe</a>
-        <a href="#metrikler" class="hover:text-white transition">Metrikler</a>
-        <a href="#guvenlik" class="hover:text-white transition">Risk Kalkanı</a>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#felsefe" class="hover:text-brandCyan transition">Felsefe</a>
+        <a href="#metrikler" class="hover:text-brandCyan transition">Doğrulanmış Metrikler</a>
+        <a href="#risk-kalkani" class="hover:text-brandCyan transition">Risk Kalkanı</a>
+        <a href="#yol-haritasi" class="hover:text-brandCyan transition">Yol Haritası</a>
+        <a href="#sss" class="hover:text-brandCyan transition">SSS</a>
       </div>
-      <a href="#metrikler" class="text-xs font-semibold px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-brandCyan border border-slate-700 transition">
-        Canlı Durum: Aktif
-      </a>
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-brandBorder bg-brandSurface text-xs font-mono text-brandCyan">
+          <span class="w-2 h-2 rounded-full bg-brandGreen animate-ping"></span>
+          Nexus Core: Canlı
+        </span>
+      </div>
     </div>
   </nav>
 
-  <!-- Hero Alanı -->
-  <header class="max-w-6xl mx-auto px-6 pt-20 pb-16 text-center">
-    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-800 bg-brandCard text-xs font-mono text-brandCyan mb-6">
-      <span class="w-2 h-2 rounded-full bg-brandGreen animate-pulse"></span>
-      Prop Firm Uyumlu Sermaye Protokolü
+  <!-- Hero Bölümü -->
+  <header class="max-w-6xl mx-auto px-6 pt-24 pb-20 text-center">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brandBorder bg-brandSurface text-xs font-mono text-brandCyan mb-8">
+      Prop Firm Uyumlu | Sermaye Güvenliği Protokolü
     </div>
-    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white max-w-3xl mx-auto leading-tight">
-      Duygulardan Arındırılmış, <span class="text-transparent bg-clip-text bg-gradient-to-r from-brandCyan to-brandGreen">Kural Tabanlı</span> Sermaye Yönetimi.
+    <h1 class="text-4xl md:text-6xl font-black tracking-tight text-white leading-tight max-w-4xl mx-auto">
+      Duygulardan Arındırılmış, <br/>
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-brandCyan via-teal-300 to-brandGreen">
+        Matematiksel ve Kural Tabanlı
+      </span> İşlem Motoru.
     </h1>
     <p class="mt-6 text-base md:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
-      XAUUSD M5 dinamik risk motoru. Hızlı kazanç yanılsamaları yerine masada kalmayı ve sermayeyi korumayı hedefleyen nicel ticaret mimarisi.
+      XAUUSD (Ons Altın) 5 dakikalık grafikte çalışan dinamik koruma sistemi. Hızlı zengin olma vaatleri yerine, sermayeyi piyasa dalgalanmalarından koruyarak uzun vadeli istikrar sağlar.
     </p>
-    <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-      <a href="#guvenlik" class="w-full sm:w-auto px-6 py-3 rounded-lg bg-brandCyan text-black font-semibold text-sm hover:opacity-90 transition">
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <a href="#risk-kalkani" class="px-8 py-3.5 rounded-lg bg-brandCyan text-slate-950 font-bold text-sm hover:brightness-110 shadow-lg shadow-brandCyan/20 transition">
         Risk Mimarisi
       </a>
-      <a href="#metrikler" class="w-full sm:w-auto px-6 py-3 rounded-lg bg-brandCard border border-slate-800 text-slate-300 font-semibold text-sm hover:border-slate-700 transition">
+      <a href="#metrikler" class="px-8 py-3.5 rounded-lg bg-brandSurface border border-brandBorder text-slate-200 font-semibold text-sm hover:border-slate-500 transition">
         Sistem Metrikleri
       </a>
     </div>
   </header>
 
-  <!-- Temel Metrikler Paneli -->
-  <section id="metrikler" class="max-w-6xl mx-auto px-6 py-12">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bg-brandCard border border-slate-800/80 rounded-xl p-5 text-center">
-        <span class="text-xs font-mono text-slate-400 block mb-1">PROFIT FACTOR</span>
-        <span class="text-2xl md:text-3xl font-extrabold text-brandGreen font-mono">1.39</span>
+  <!-- 1. Felsefe Bölümü -->
+  <section id="felsefe" class="py-20 border-t border-brandBorder bg-brandSurface/40">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="max-w-3xl mb-12">
+        <span class="text-brandCyan text-xs font-mono uppercase tracking-widest block mb-2">01 // Temel Felsefe</span>
+        <h2 class="text-3xl font-extrabold text-white">Neden nexusTrade? Masada Kalmanın Matematiği</h2>
+        <p class="text-slate-400 text-sm mt-3 leading-relaxed">
+          Finans piyasalarında kaybedenlerin %90'ı strateji eksikliğinden değil; kontrolsüz hırs, intikam işlemleri ve disiplinsiz risk yönetimi yüzünden elenir. NexusTrade, insani duyguları tamamen devre dışı bırakır.
+        </p>
       </div>
-      <div class="bg-brandCard border border-slate-800/80 rounded-xl p-5 text-center">
-        <span class="text-xs font-mono text-slate-400 block mb-1">İŞLEM RİSKİ</span>
-        <span class="text-2xl md:text-3xl font-extrabold text-white font-mono">%0.50</span>
-      </div>
-      <div class="bg-brandCard border border-slate-800/80 rounded-xl p-5 text-center">
-        <span class="text-xs font-mono text-slate-400 block mb-1">MAX LOT TAVANI</span>
-        <span class="text-2xl md:text-3xl font-extrabold text-brandCyan font-mono">0.60</span>
-      </div>
-      <div class="bg-brandCard border border-slate-800/80 rounded-xl p-5 text-center">
-        <span class="text-xs font-mono text-slate-400 block mb-1">HEDEF ÇEKİLME</span>
-        <span class="text-2xl md:text-3xl font-extrabold text-white font-mono">&lt; %5</span>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-brandCard border border-brandBorder rounded-2xl p-6">
+          <div class="text-brandCyan font-mono text-xl font-bold mb-3">Disiplin</div>
+          <h3 class="text-lg font-semibold text-white mb-2">Kişisel Yorum Yok</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Piyasa hislerle değil, olasılıklarla hareket eder. Bot sadece test edilmiş algoritmik şartlar oluştuğunda tetiklenir, tereddüt etmez ve acele etmez.
+          </p>
+        </div>
+
+        <div class="bg-brandCard border border-brandBorder rounded-2xl p-6">
+          <div class="text-brandGreen font-mono text-xl font-bold mb-3">Sermaye Koruması</div>
+          <h3 class="text-lg font-semibold text-white mb-2">Önce Savunma, Sonra Kâr</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Hedefimiz tek bir günde servet kazanmak değil; arka arkaya gelen ters dalgalarda bile ana paranın erimesini engelleyerek oyunda kalmaktır.
+          </p>
+        </div>
+
+        <div class="bg-brandCard border border-brandBorder rounded-2xl p-6">
+          <div class="text-slate-200 font-mono text-xl font-bold mb-3">Prop Firm Uyumu</div>
+          <h3 class="text-lg font-semibold text-white mb-2">Sert Kurallara Tam Sadakat</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Fon şirketlerinin günlük %5 ve genel %10 kayıp limitlerine takılmamak üzere özel güvenlik bariyerleriyle donatılmıştır.
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Risk Kalkanı & Güvenlik Blokları -->
-  <section id="guvenlik" class="max-w-6xl mx-auto px-6 py-16">
-    <div class="text-center mb-12">
-      <h2 class="text-2xl md:text-3xl font-bold text-white">Üç Kademeli Sermaye Kalkanı</h2>
-      <p class="text-slate-400 text-sm mt-2">Piyasa ne kadar sertleşirse sertleşsin hesabı koruyan matematiksel bariyerler.</p>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="bg-brandCard border border-slate-800 rounded-xl p-6 relative overflow-hidden">
-        <div class="w-10 h-10 rounded-lg bg-slate-800/60 flex items-center justify-center text-brandCyan mb-4 font-mono font-bold">01</div>
-        <h3 class="text-lg font-semibold text-white mb-2">Günlük Zarar Freni (%2.5)</h3>
-        <p class="text-sm text-slate-400 leading-relaxed">
-          Kümülatif gün içi kayıp $1.250 seviyesine ulaştığı an bot o gün için kepenkleri indirir. Fonun %5'lik kuralına asla yaklaştırmaz.
+  <!-- 2. Sistem Metrikleri Bölümü -->
+  <section id="metrikler" class="py-20 border-t border-brandBorder">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="max-w-3xl mb-12">
+        <span class="text-brandCyan text-xs font-mono uppercase tracking-widest block mb-2">02 // Doğrulanmış Veriler</span>
+        <h2 class="text-3xl font-extrabold text-white">Performans ve Operasyonel Metrikler</h2>
+        <p class="text-slate-400 text-sm mt-3 leading-relaxed">
+          Tarihsel geriye dönük testler ve canlı piyasa simülasyonlarıyla optimize edilmiş net çalışma parametreleri.
         </p>
       </div>
 
-      <div class="bg-brandCard border border-slate-800 rounded-xl p-6 relative overflow-hidden">
-        <div class="w-10 h-10 rounded-lg bg-slate-800/60 flex items-center justify-center text-brandGreen mb-4 font-mono font-bold">02</div>
-        <h3 class="text-lg font-semibold text-white mb-2">Devre Kesici Kalkan (%8)</h3>
-        <p class="text-sm text-slate-400 leading-relaxed">
-          Bakiye $46.000 seviyesine gerilerse acil durum protokolü devreye girer. Fonun %10 sınırına $1.000 güvenlik payı bırakılarak hesap diskalifiye edilmez.
-        </p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-brandCard border border-brandBorder rounded-xl p-6 text-center">
+          <span class="text-xs font-mono text-slate-400 block mb-1">PROFIT FACTOR (KÂR ÇARPANI)</span>
+          <span class="text-3xl font-extrabold text-brandGreen font-mono">1.39</span>
+          <span class="text-[11px] text-slate-500 block mt-2">Toplam Kâr / Toplam Zarar</span>
+        </div>
+
+        <div class="bg-brandCard border border-brandBorder rounded-xl p-6 text-center">
+          <span class="text-xs font-mono text-slate-400 block mb-1">İŞLEM BAŞINA RİSK</span>
+          <span class="text-3xl font-extrabold text-white font-mono">%0.50</span>
+          <span class="text-[11px] text-slate-500 block mt-2">Hesap Bakiyesine Oranla</span>
+        </div>
+
+        <div class="bg-brandCard border border-brandBorder rounded-xl p-6 text-center">
+          <span class="text-xs font-mono text-slate-400 block mb-1">MAKSİMUM LOT TAVANI</span>
+          <span class="text-3xl font-extrabold text-brandCyan font-mono">0.60 Lot</span>
+          <span class="text-[11px] text-slate-500 block mt-2">50.000$ Bakiye İçin Üst Sınır</span>
+        </div>
+
+        <div class="bg-brandCard border border-brandBorder rounded-xl p-6 text-center">
+          <span class="text-xs font-mono text-slate-400 block mb-1">HEDEF MAKSİMUM ÇEKİLME</span>
+          <span class="text-3xl font-extrabold text-white font-mono">&lt; %5.0</span>
+          <span class="text-[11px] text-slate-500 block mt-2">Peak-to-Valley (Tepe-Dip)</span>
+        </div>
       </div>
 
-      <div class="bg-brandCard border border-slate-800 rounded-xl p-6 relative overflow-hidden">
-        <div class="w-10 h-10 rounded-lg bg-slate-800/60 flex items-center justify-center text-slate-200 mb-4 font-mono font-bold">03</div>
-        <h3 class="text-lg font-semibold text-white mb-2">Dinamik Hacim Bariyeri</h3>
-        <p class="text-sm text-slate-400 leading-relaxed">
-          Stop mesafesi ne kadar daralsa da işlem hacmi 0.60 lot tavanını asla aşamaz. Beklenmedik ani kaymalara karşı ekstra koruma sağlar.
-        </p>
+      <!-- Detaylı Parametre Tablosu -->
+      <div class="overflow-x-auto border border-brandBorder rounded-xl bg-brandSurface">
+        <table class="w-full text-left text-sm text-slate-300">
+          <thead class="bg-brandCard text-xs font-mono uppercase text-slate-400 border-b border-brandBorder">
+            <tr>
+              <th class="px-6 py-4">Parametre Adı</th>
+              <th class="px-6 py-4">Değer</th>
+              <th class="px-6 py-4">Açıklama</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-brandBorder font-mono text-xs">
+            <tr>
+              <td class="px-6 py-3 font-semibold text-white">İşlem Enstrümanı & Zaman Dilimi</td>
+              <td class="px-6 py-3 text-brandCyan">XAUUSD // M5 (5 Dakika)</td>
+              <td class="px-6 py-3 text-slate-400 font-sans">Likiditesi en yüksek ons altın paritesinde hızlı döngü modeli.</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-3 font-semibold text-white">Kayıp Durdurma (Stop Loss)</td>
+              <td class="px-6 py-3 text-brandRed">Dinamik ATR Tabanlı</td>
+              <td class="px-6 py-3 text-slate-400 font-sans">Volatiliteye göre her işlemde otomatik hesaplanan katı SL noktası.</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-3 font-semibold text-white">Haber Filtresi</td>
+              <td class="px-6 py-3 text-brandGreen">Yüksek Etkili (High Impact) Blokajı</td>
+              <td class="px-6 py-3 text-slate-400 font-sans">NFP, TÜFE ve Faiz kararlarından 30 dk önce ve sonra yeni pozisyon almaz.</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
 
-  <!-- Yasal Uyarı -->
-  <footer class="border-t border-slate-800/60 mt-16 py-8">
-    <div class="max-w-6xl mx-auto px-6 text-center text-xs text-slate-500 leading-relaxed space-y-2">
-      <p>NexusTrade bir yatırım danışmanlığı veya portföy yönetim şirketi değildir. Yazılım ve algoritmik modelleme araştırmaları sunar.</p>
-      <p>Finansal piyasalarda işlem yapmak yüksek sermaye kaybı riski içerir. Geçmiş test performansları gelecekteki sonuçların garantisi değildir.</p>
-      <p class="pt-4 text-slate-600">© 2026 NexusTrade Ecosystem. Tüm hakları saklıdır.</p>
+  <!-- 3. Risk Kalkanı Bölümü -->
+  <section id="risk-kalkani" class="py-20 border-t border-brandBorder bg-brandSurface/40">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="max-w-3xl mb-12">
+        <span class="text-brandCyan text-xs font-mono uppercase tracking-widest block mb-2">03 // Güvenlik Katmanı</span>
+        <h2 class="text-3xl font-extrabold text-white">Üç Kademeli Nexus Shield Protokolü</h2>
+        <p class="text-slate-400 text-sm mt-3 leading-relaxed">
+          Piyasada sert ters hareketler oluştuğunda hesabın diskalifiye olmasını veya batmasını önleyen yazılımsal bariyerler.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-brandCard border border-brandBorder rounded-2xl p-6 relative">
+          <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center font-mono font-bold text-brandCyan mb-4">
+            01
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Günlük Zarar Freni (%2.5)</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Gün içi gerçekleşen kümülatif kayıp 1.250$ seviyesine vardığı an robot o gün için otomatik olarak durur ve tüm yeni emirleri kilitler. Prop firmaların %5 günlük kuralına yaklaşılmasına asla izin vermez.
+          </p>
+        </div>
+
+        <div class="bg-brandCard border border-brandBorder rounded-2xl p-6 relative">
+          <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center font-mono font-bold text-brandGreen mb-4">
+            02
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Devre Kesici Kalkan (%8.0)</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Genel hesap bakiyesi 46.000$ altına gerilerse sistem acil durum moduna geçer. Prop firmanın %10 genel kuralına 1.000$ güvenli marj bırakarak hesabın patlamasını kesin olarak engeller.
+          </p>
+        </div>
+
+        <div class="bg-brandCard border border-brandBorder rounded-2xl p-6 relative">
+          <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center font-mono font-bold text-slate-200 mb-4">
+            03
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Dinamik Hacim Bariyeri</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            İşlem mesafesi ne kadar dar olursa olsun formül maksimum 0.60 lot üzerine çıkamaz. Aşırı kaldıraç ve ani spread açılmalarından kaynaklanan beklenmedik kaymalar elenir.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Yol Haritası Bölümü -->
+  <section id="yol-haritasi" class="py-20 border-t border-brandBorder">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="max-w-3xl mb-12">
+        <span class="text-brandCyan text-xs font-mono uppercase tracking-widest block mb-2">04 // Ekosistem Planı</span>
+        <h2 class="text-3xl font-extrabold text-white">NexusTrade Yol Haritası</h2>
+        <p class="text-slate-400 text-sm mt-3 leading-relaxed">
+          Tek bir robottan tam teşekküllü bir fintek SaaS platformuna uzanan büyüme adımlarımız.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-2xl border border-brandCyan/40 bg-brandSurface relative">
+          <span class="text-xs font-mono text-brandCyan bg-brandCyan/10 px-2.5 py-1 rounded-md border border-brandCyan/30">FAZ 1 - AKTİF</span>
+          <h3 class="text-lg font-bold text-white mt-4 mb-2">Nexus Core & Test Doğrulaması</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            XAUUSD M5 motorunun canlı prop firm hesaplarında test edilmesi, risk limitlerinin doğrulanması ve Vercel vitrininin kurulması.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-brandBorder bg-brandSurface opacity-80">
+          <span class="text-xs font-mono text-slate-400 bg-slate-800 px-2.5 py-1 rounded-md">FAZ 2 - PLANLANAN</span>
+          <h3 class="text-lg font-bold text-white mt-4 mb-2">Bulut Tabanlı Lisans Portalı</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Kullanıcıların web sitemizden MT5 hesap numaralarını kaydedip uzaktan anlık lisans kontrolü yapabileceği Supabase API köprüsü.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-brandBorder bg-brandSurface opacity-60">
+          <span class="text-xs font-mono text-slate-400 bg-slate-800 px-2.5 py-1 rounded-md">FAZ 3 - GELECEK</span>
+          <h3 class="text-lg font-bold text-white mt-4 mb-2">Nexus Wave & Küresel SaaS</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            1 Saatlik (1H) trend takip eden yeni algoritmaların eklenmesi, kripto ile otomatik lisans satışı ve çoklu dil desteği.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. SSS Bölümü -->
+  <section id="sss" class="py-20 border-t border-brandBorder bg-brandSurface/40">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <span class="text-brandCyan text-xs font-mono uppercase tracking-widest block mb-2">05 // Bilgi Merkezi</span>
+        <h2 class="text-3xl font-extrabold text-white">Sıkça Sorulan Sorular</h2>
+      </div>
+
+      <div class="space-y-4">
+        <div class="border border-brandBorder bg-brandCard rounded-xl p-5">
+          <h4 class="text-base font-semibold text-white mb-2">Nexus Core hangi platformlarda çalışır?</h4>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Sistem MetaTrader 5 (MT5) masaüstü terminalleri ve Windows tabanlı VPS (Sanal Sunucu) ortamları için optimize edilmiştir.
+          </p>
+        </div>
+
+        <div class="border border-brandBorder bg-brandCard rounded-xl p-5">
+          <h4 class="text-base font-semibold text-white mb-2">Prop firm kural ihlallerine karşı koruma nasıl çalışır?</h4>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Nexus Shield protokolü hem anlık açık pozisyonlardaki zararı hem de gün içi kümülatif bakiyeyi her tick hareketinde hesaplar. %2.5 günlük limit aşıldığı an bekleyen emirleri siler ve terminali kilitler.
+          </p>
+        </div>
+
+        <div class="border border-brandBorder bg-brandCard rounded-xl p-5">
+          <h4 class="text-base font-semibold text-white mb-2">Sistemi çalıştırmak için kodlama bilmek gerekir mi?</h4>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Hayır. Sistem derlenmiş (.ex5) formatında sunulur. Yalnızca ilgili MT5 grafik ekranına sürükleyip risk parametrelerini onaylamanız yeterlidir.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Alt Bilgi / Yasal Sorumluluk Reddi -->
+  <footer class="border-t border-brandBorder py-12 bg-brandDark">
+    <div class="max-w-6xl mx-auto px-6 text-center text-xs text-slate-500 space-y-3 leading-relaxed">
+      <p class="font-medium text-slate-400">YASAL UYARI VE RİSK BİLDİRİMİ</p>
+      <p class="max-w-3xl mx-auto">
+        NexusTrade bir portföy yönetim şirketi veya lisanslı yatırım danışmanı değildir. Sunulan tüm algoritmik yazılımlar ve istatistiki modeller yalnızca eğitim, araştırma ve otomasyon amaçlıdır. Finans piyasalarında ve özellikle kaldıraçlı varlıklarda işlem yapmak yüksek derecede sermaye kaybı riski taşır.
+      </p>
+      <div class="pt-6 border-t border-brandBorder/50 text-slate-600 font-mono">
+        © 2026 NexusTrade Architecture. Tüm hakları saklıdır.
+      </div>
     </div>
   </footer>
 
