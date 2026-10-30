@@ -57,8 +57,8 @@
         </div>
     </div>
 
-    <!-- NAVBAR -->
-    <header class="sticky top-0 z-50 bg-brand-dark/90 backdrop-blur-md border-b border-brand-border">
+    <!-- NAVBAR (HER EKRANDA AÇILAN 3 ÇİZGİLİ MENÜLÜ) -->
+    <header class="sticky top-0 z-50 bg-brand-dark/95 backdrop-blur-md border-b border-brand-border">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-cyan-500 flex items-center justify-center shadow-lg shadow-emerald-500/20 ring-1 ring-white/20">
@@ -70,41 +70,41 @@
                 </div>
             </div>
 
-            <!-- Masaüstü Linkler -->
-            <nav class="hidden lg:flex items-center space-x-6 text-sm font-medium text-slate-300">
-                <a href="#telegram-vip" class="text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-2">
-                    <i class="fa-brands fa-telegram"></i> VIP Sinyal
-                </a>
-                <a href="#veriler" class="hover:text-emerald-400 transition-colors">Backtest Verileri</a>
-                <a href="#hesaplayici" class="hover:text-emerald-400 transition-colors">Risk & Lot Aracı</a>
-                <a href="#canli-grafik" class="hover:text-emerald-400 transition-colors">Canlı Grafik</a>
-            </nav>
-
             <!-- Sağ Butonlar -->
-            <div class="flex items-center space-x-3">
-                <a href="#robot-satin-al" class="hidden sm:inline-flex items-center space-x-2 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 font-black px-4 py-2 rounded-xl transition-all shadow-lg shadow-amber-500/20 text-xs sm:text-sm">
+            <div class="flex items-center space-x-3 sm:space-x-4">
+                <!-- Gold M5 Robot Satın Al Butonu -->
+                <a href="#robot-satin-al" class="inline-flex items-center space-x-2 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 font-black px-4 py-2 rounded-xl transition-all shadow-lg shadow-amber-500/20 text-xs sm:text-sm">
                     <i class="fa-solid fa-robot"></i>
                     <span>Gold M5 Robotu Al</span>
                 </a>
 
-                <button id="mobile-menu-btn" class="lg:hidden p-2.5 rounded-xl bg-slate-900 border border-brand-border text-slate-300 hover:text-white focus:outline-none">
+                <!-- 3 Çizgi (Hamburger Menü) Butonu -->
+                <button id="mobile-menu-btn" type="button" class="p-2.5 rounded-xl bg-slate-900 border border-brand-border text-slate-200 hover:text-white hover:border-slate-700 transition-colors focus:outline-none cursor-pointer">
                     <i class="fa-solid fa-bars text-xl"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Mobil Menü (3 Çizgiye Basınca Açılır) -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-slate-950/95 border-b border-brand-border px-6 py-6 space-y-4">
-            <a href="#robot-satin-al" class="block w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-black text-center text-sm shadow-md shadow-amber-500/20">
+        <!-- 3 Çizgiye Basınca Açılan Menü -->
+        <div id="mobile-menu" class="hidden bg-slate-950/95 border-b border-brand-border px-6 py-6 space-y-3">
+            <a href="#robot-satin-al" class="menu-link block w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-black text-center text-sm shadow-md shadow-amber-500/20">
                 <i class="fa-solid fa-robot mr-2"></i> Fortix Gold M5 Robotunu Satın Al
             </a>
-            <a href="#telegram-vip" class="block py-2 text-cyan-400 font-bold border-b border-slate-800">
+            <a href="#telegram-vip" class="menu-link block py-2.5 text-cyan-400 font-bold border-b border-slate-800/80">
                 <i class="fa-brands fa-telegram mr-2"></i> Ücretsiz VIP Sinyal Kanalı
             </a>
-            <a href="#veriler" class="block py-2 text-slate-300 hover:text-emerald-400 border-b border-slate-800">50K Backtest Raporu</a>
-            <a href="#hesaplayici" class="block py-2 text-slate-300 hover:text-emerald-400 border-b border-slate-800">Risk & Lot Aracı</a>
-            <a href="#bilesik-getiri" class="block py-2 text-slate-300 hover:text-emerald-400 border-b border-slate-800">Bileşik Getiri Simülatörü</a>
-            <a href="#canli-grafik" class="block py-2 text-slate-300 hover:text-emerald-400">Canlı Ons Altın Grafiği</a>
+            <a href="#veriler" class="menu-link block py-2.5 text-slate-300 hover:text-emerald-400 border-b border-slate-800/80">
+                <i class="fa-solid fa-chart-pie mr-2"></i> 50K Backtest Raporu
+            </a>
+            <a href="#hesaplayici" class="menu-link block py-2.5 text-slate-300 hover:text-emerald-400 border-b border-slate-800/80">
+                <i class="fa-solid fa-calculator mr-2"></i> Risk & Lot Aracı
+            </a>
+            <a href="#bilesik-getiri" class="menu-link block py-2.5 text-slate-300 hover:text-emerald-400 border-b border-slate-800/80">
+                <i class="fa-solid fa-arrow-trend-up mr-2"></i> Bileşik Getiri Simülatörü
+            </a>
+            <a href="#canli-grafik" class="menu-link block py-2.5 text-slate-300 hover:text-emerald-400">
+                <i class="fa-solid fa-display mr-2"></i> Canlı Ons Altın Grafiği
+            </a>
         </div>
     </header>
 
@@ -435,18 +435,28 @@
 
     <!-- JAVASCRIPT MOTORU -->
     <script>
-        // Mobil Menü
-        const mobileBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
+        // 3 Çizgili Menü Aç/Kapa Kontrolü (Tüm Cihazlar İçin)
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const menuDropdown = document.getElementById('mobile-menu');
 
-        if (mobileBtn && mobileMenu) {
-            mobileBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
+        if (menuBtn && menuDropdown) {
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                menuDropdown.classList.toggle('hidden');
             });
-            mobileMenu.querySelectorAll('a').forEach(link => {
+
+            // Menüdeki bir linke basınca menüyü kapat
+            menuDropdown.querySelectorAll('.menu-link').forEach(link => {
                 link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
+                    menuDropdown.classList.add('hidden');
                 });
+            });
+
+            // Menü dışına tıklandığında menüyü otomatik kapat
+            document.addEventListener('click', (e) => {
+                if (!menuDropdown.contains(e.target) && !menuBtn.contains(e.target)) {
+                    menuDropdown.classList.add('hidden');
+                }
             });
         }
 
@@ -498,7 +508,7 @@
             }
         }, 4000);
 
-        // Canlı Bildirimler
+        // Canlı Toast Bildirimleri
         const cities = ['İstanbul', 'Ankara', 'İzmir', 'Bursa', 'Antalya', 'Bakü', 'Londra'];
         const toast = document.getElementById('live-toast');
         const toastBody = document.getElementById('toast-body');
