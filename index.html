@@ -1,322 +1,845 @@
 <!DOCTYPE html>
-<html lang="tr" class="dark scroll-smooth">
+<html lang="tr" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NexusTrade | Kurumsal Algoritmik Sermaye Mimarisi</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brandDark: '#07090E',
-            brandSurface: '#0E131F',
-            brandCard: '#141B2D',
-            brandBorder: '#1F293D',
-            brandCyan: '#00F2FE',
-            brandGreen: '#10B981',
-            brandRed: '#EF4444'
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FortixTrade | Kurumsal Algoritmik Ticaret & VIP Sinyal Topluluğu</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            500: '#10b981',
+                            600: '#059669',
+                            dark: '#080d1a',
+                            card: '#0f172a',
+                            border: '#1e293b'
+                        }
+                    }
+                }
+            }
         }
-      }
-    }
-  </script>
+    </script>
+    <style>
+        .glow-effect {
+            box-shadow: 0 0 35px -5px rgba(16, 185, 129, 0.12);
+        }
+        .glow-telegram {
+            box-shadow: 0 0 40px -5px rgba(34, 158, 217, 0.25);
+        }
+        details summary::-webkit-details-marker {
+            display: none;
+        }
+        @keyframes slideInLeft {
+            from { transform: translateX(-120%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOutLeft {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(-120%); opacity: 0; }
+        }
+        .toast-enter { animation: slideInLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .toast-exit { animation: slideOutLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    </style>
 </head>
-<body class="bg-brandDark text-slate-100 font-sans antialiased selection:bg-brandCyan selection:text-black min-h-screen relative">
+<body class="bg-brand-dark text-slate-200 font-sans antialiased selection:bg-emerald-500 selection:text-white pb-16">
 
-  <!-- Üst Navigasyon -->
-  <nav class="border-b border-brandBorder bg-brandDark/90 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-3.5 h-3.5 rounded-full bg-brandCyan shadow-[0_0_15px_#00F2FE]"></div>
-        <span class="text-xl font-extrabold tracking-wider text-white">NEXUS<span class="text-brandCyan">TRADE</span></span>
-      </div>
-      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-        <a href="#felsefe" class="hover:text-brandCyan transition">Felsefe</a>
-        <a href="#metrikler" class="hover:text-brandCyan transition">Metrikler</a>
-        <a href="#risk-kalkani" class="hover:text-brandCyan transition">Risk Kalkanı</a>
-        <a href="#paketler" class="hover:text-brandCyan transition">Paketler</a>
-        <a href="#iletisim" class="hover:text-brandCyan transition">İletişim & Talep</a>
-      </div>
-      <div class="flex items-center gap-3">
-        <a href="#iletisim" class="px-4 py-2 rounded-lg bg-brandCyan text-slate-950 font-bold text-xs hover:brightness-110 transition">
-          Lisans Al
+    <!-- 1. ÜST CANLI PİYASA BANDI (TradingView Ticker Tape) -->
+    <div class="w-full bg-[#050914] border-b border-brand-border overflow-hidden">
+        <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+            {
+                "symbols": [
+                    { "proName": "OANDA:XAUUSD", "title": "ONS ALTIN" },
+                    { "proName": "FX_IDC:EURUSD", "title": "EUR/USD" },
+                    { "proName": "FX_IDC:GBPUSD", "title": "GBP/USD" },
+                    { "proName": "FX_IDC:USDJPY", "title": "USD/JPY" },
+                    { "proName": "BINANCE:BTCUSDT", "title": "BITCOIN" },
+                    { "proName": "BINANCE:ETHUSDT", "title": "ETHEREUM" }
+                ],
+                "showSymbolLogo": true,
+                "isTransparent": true,
+                "displayMode": "adaptive",
+                "colorTheme": "dark",
+                "locale": "tr"
+            }
+            </script>
+        </div>
+    </div>
+
+    <!-- 2. PİYASA SEANSLARI VE LİKİDİTE ÇUBUĞU -->
+    <div class="bg-slate-950/80 border-b border-brand-border py-2 text-xs font-mono">
+        <div class="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-between gap-3 text-slate-400">
+            <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <span class="text-slate-300 font-bold" data-i18n="sessions_title">Küresel Seanslar & Likidite:</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-4 sm:gap-6">
+                <span id="session-london" class="inline-flex items-center space-x-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span>Londra: <strong class="text-white">10:00 - 18:30</strong></span></span>
+                <span id="session-ny" class="inline-flex items-center space-x-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span>New York: <strong class="text-white">15:30 - 00:00</strong></span></span>
+                <span id="session-tokyo" class="inline-flex items-center space-x-1.5"><span class="w-1.5 h-1.5 rounded-full bg-slate-600"></span><span>Tokyo: <strong class="text-white">02:00 - 11:00</strong></span></span>
+                <span class="text-emerald-400 font-bold hidden md:inline" data-i18n="volatility_note">XAUUSD Ana Volatilite Penceresi Aktif</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. NAVİGASYON (HEADER) -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-brand-dark/90 border-b border-brand-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Marka Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                        <i class="fa-solid fa-microchip text-slate-950 text-xl font-black"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-extrabold tracking-tight text-white">Fortix<span class="text-emerald-400">Trade</span></span>
+                        <span class="block text-[10px] uppercase font-mono tracking-widest text-emerald-500 font-semibold">Institutional Algo Systems</span>
+                    </div>
+                </div>
+
+                <!-- Masaüstü Linkler -->
+                <div class="hidden xl:flex items-center space-x-6 text-sm font-medium">
+                    <a href="#telegram-vip" class="text-cyan-400 hover:text-cyan-300 font-bold transition-colors flex items-center space-x-1">
+                        <i class="fa-solid fa-bolt text-xs"></i>
+                        <span>Ücretsiz VIP Sinyal</span>
+                    </a>
+                    <a href="#veriler" class="hover:text-emerald-400 transition-colors" data-i18n="nav_report">50K Raporu</a>
+                    <a href="#hesaplayici" class="hover:text-emerald-400 transition-colors" data-i18n="nav_lot_calc">Risk & Lot Aracı</a>
+                    <a href="#bilesik-getiri" class="hover:text-emerald-400 transition-colors" data-i18n="nav_compound">Bileşik Getiri</a>
+                    <a href="#canli-grafik" class="hover:text-emerald-400 transition-colors" data-i18n="nav_chart">Teknik Grafik</a>
+                    <a href="#karsilastirma" class="hover:text-emerald-400 transition-colors" data-i18n="nav_matrix">Prop Matrisi</a>
+                    <a href="#takvim" class="hover:text-emerald-400 transition-colors" data-i18n="nav_calendar">Ekonomik Takvim</a>
+                </div>
+
+                <!-- Dil Seçici & Telegram CTA -->
+                <div class="flex items-center space-x-4">
+                    <button id="lang-toggle" class="px-3 py-1.5 rounded-lg bg-slate-900 border border-brand-border text-xs font-mono font-bold text-slate-300 hover:text-white hover:border-emerald-500 transition-colors">
+                        EN
+                    </button>
+                    <a href="https://t.me/fortixtrade" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-slate-950 font-black px-4 py-2 rounded-lg transition-all duration-200 shadow-md shadow-blue-500/20 text-sm">
+                        <i class="fa-brands fa-telegram text-lg"></i>
+                        <span>Kanala Katıl (Ücretsiz)</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 4. HERO SECTION (VIP SİNYAL ÇAĞRISI VURGULU) -->
+    <section class="relative pt-16 pb-20 overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-900/20 via-brand-dark to-brand-dark"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            
+            <!-- Sınırlı Süre Ücretsiz Rozeti -->
+            <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-6 animate-pulse">
+                <i class="fa-solid fa-gift"></i>
+                <span>Lansmana Özel: VIP Algoritmik Sinyal Kanalı Geçici Olarak %100 ÜCRETSİZ!</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-tight sm:leading-none mb-6">
+                <span data-i18n="hero_title_1">Sermaye Koruması Öncelikli</span> <br class="hidden sm:block">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400" data-i18n="hero_title_2">Algoritmik Ticaret Mimarisi.</span>
+            </h1>
+            <p class="text-base sm:text-lg text-slate-400 mb-10 max-w-3xl mx-auto leading-relaxed" data-i18n="hero_desc">
+                FortixTrade, yüksek oynaklığı kurumsal risk filtreleriyle izole eden, dinamik ATR stop kalkanı ve katı lot sınırlarıyla çalışan MetaTrader 5 robotik altyapısıdır. Botun tüm sinyallerini canlı izlemek için aramıza katılın.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="https://t.me/fortixtrade" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-black text-center transition-all shadow-xl shadow-cyan-500/25 flex items-center justify-center space-x-2">
+                    <i class="fa-brands fa-telegram text-xl"></i>
+                    <span>Ücretsiz VIP Sinyal Kanalına Katıl</span>
+                </a>
+                <a href="#veriler" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-brand-card hover:bg-slate-800 text-white font-semibold border border-brand-border text-center transition-all">
+                    50.000$ Doğrulanmış Rapor
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. ÖZEL BÖLÜM: TELEGRAM VIP SİNYAL TOPLULUĞU DAVETİ (CONVERSION BOOSTER) -->
+    <section id="telegram-vip" class="py-16 bg-slate-950/90 border-y border-brand-border relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="bg-gradient-to-br from-[#0c1a30] via-brand-card to-[#091522] border-2 border-cyan-500/40 rounded-3xl p-8 sm:p-14 glow-telegram text-center">
+                <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-blue-500/20 text-cyan-400 text-xs font-mono font-bold uppercase mb-6">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                    <span>Erken Erişim Fırsatı • Sınırlı Kontenjan</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">
+                    FortixTrade Canlı Sinyal Grubumuza <br class="hidden sm:inline">
+                    <span class="text-cyan-400">Şimdilik Tamamen Ücretsiz</span> Davetlisiniz!
+                </h2>
+                <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mb-8 leading-relaxed">
+                    Robotumuzun ürettiği anlık Ons Altın (XAUUSD) ve majör parite işlemlerini, giriş seviyelerini, dinamik Stop Loss ve kâr alma anlarını gecikmesiz olarak Telegram üzerinden takip edin. İleride ücretli olacak bu kapalı ağa ilk katılanlardan biri olun!
+                </p>
+
+                <!-- Avantajlar Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto mb-10 text-left">
+                    <div class="p-4 rounded-xl bg-slate-900/80 border border-cyan-500/20">
+                        <div class="text-emerald-400 font-bold mb-1 flex items-center space-x-2">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>Anlık İşlem Bildirimi</span>
+                        </div>
+                        <p class="text-xs text-slate-400">Robot pozisyon açtığı veya başabaşa çektiği an bildirim alın.</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-900/80 border border-cyan-500/20">
+                        <div class="text-emerald-400 font-bold mb-1 flex items-center space-x-2">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>0.20% Kurumsal Risk</span>
+                        </div>
+                        <p class="text-xs text-slate-400">Kumar oynamayan, sermayeyi ve fon hesaplarını koruyan işlemler.</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-900/80 border border-cyan-500/20">
+                        <div class="text-emerald-400 font-bold mb-1 flex items-center space-x-2">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>Haftalık Şeffaf Rapor</span>
+                        </div>
+                        <p class="text-xs text-slate-400">Her cuma kapanışında kâr, zarar ve drawdown dökümü.</p>
+                    </div>
+                </div>
+
+                <a href="https://t.me/fortixtrade" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-3 px-10 py-4 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black text-lg transition-all transform hover:scale-105 shadow-xl shadow-cyan-500/30">
+                    <i class="fa-brands fa-telegram text-2xl"></i>
+                    <span>Hemen Ücretsiz Katılın: @fortixtrade</span>
+                </a>
+                <div class="text-[11px] text-slate-400 mt-4 font-mono">
+                    * Katılım kontenjanla sınırlıdır. Erken katılan üyelerimiz daima öncelikli erişim hakkına sahip olacaktır.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. 50.000$ DOĞRULANMIŞ BACKTEST RAPORU VİTRİNİ -->
+    <section id="veriler" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <h2 class="text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">MetaTrader 5 Backtest Doğrulaması</h2>
+                    <h3 class="text-3xl font-extrabold text-white" data-i18n="report_title">50.000$ Hesap Risk & Performans Çıktıları</h3>
+                </div>
+                <div class="mt-4 md:mt-0 flex items-center space-x-3">
+                    <span class="text-sm text-slate-400 font-mono">Model: <strong class="text-emerald-400">M1 OHLC / XAUUSD M5</strong></span>
+                    <a href="javascript:void(0)" onclick="alert('Detaylı HTML / CSV strateji raporu Telegram grubumuzda sabitlenmiş mesaj olarak paylaşılmıştır: @fortixtrade')" class="px-3 py-1.5 rounded-lg bg-slate-900 border border-brand-border hover:border-emerald-500 text-xs font-mono text-slate-300 transition-colors inline-flex items-center space-x-1.5">
+                        <i class="fa-solid fa-file-arrow-down text-emerald-400"></i>
+                        <span>Raporu İndir (.HTML)</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Metrik Kartları -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="bg-brand-card p-6 rounded-2xl border border-brand-border glow-effect">
+                    <div class="text-slate-400 text-xs uppercase tracking-wider font-semibold mb-2">Başlangıç Bakiyesi</div>
+                    <div class="text-3xl font-black text-white font-mono">50.000 $</div>
+                    <div class="mt-2 text-xs text-slate-500">Standart kurumsal fon büyüklüğü</div>
+                </div>
+
+                <div class="bg-brand-card p-6 rounded-2xl border border-brand-border glow-effect">
+                    <div class="text-slate-400 text-xs uppercase tracking-wider font-semibold mb-2">İşlem Başına Risk</div>
+                    <div class="text-3xl font-black text-emerald-400 font-mono">%0.20</div>
+                    <div class="mt-2 text-xs text-slate-500">İşlem başına 100$ dinamik bütçe</div>
+                </div>
+
+                <div class="bg-brand-card p-6 rounded-2xl border border-brand-border glow-effect">
+                    <div class="text-slate-400 text-xs uppercase tracking-wider font-semibold mb-2">Maksimum Çekilme (Drawdown)</div>
+                    <div class="text-3xl font-black text-cyan-400 font-mono">%4.9</div>
+                    <div class="mt-2 text-xs text-slate-500">%8 genel sınırın fersah fersah altında</div>
+                </div>
+
+                <div class="bg-brand-card p-6 rounded-2xl border border-brand-border glow-effect">
+                    <div class="text-slate-400 text-xs uppercase tracking-wider font-semibold mb-2">Güvenlik Tavanı</div>
+                    <div class="text-3xl font-black text-amber-400 font-mono">0.60 Lot</div>
+                    <div class="mt-2 text-xs text-slate-500">Aşılmaz katı işlem hacmi tavanı</div>
+                </div>
+            </div>
+
+            <!-- 3 Temel Savunma Sütunu -->
+            <div class="bg-brand-card rounded-2xl border border-brand-border p-8">
+                <h4 class="text-lg font-bold text-white mb-6 flex items-center space-x-2">
+                    <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                    <span>Çekilmeyi %24'ten %4.9'a Düşüren Sistem Parametreleri</span>
+                </h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+                    <div class="border-l-2 border-emerald-500 pl-4 py-1">
+                        <div class="font-bold text-white mb-1">Dinamik ATR Stop-Loss (1.0x)</div>
+                        <p class="text-slate-400 text-xs">Piyasa oynaklığını anlık ölçer. Sert dalgalarda zararın büyümesine izin vermeden pozisyonu erkenden kapatır.</p>
+                    </div>
+                    <div class="border-l-2 border-emerald-500 pl-4 py-1">
+                        <div class="font-bold text-white mb-1">Başabaş (Breakeven - Hedefin %70'i)</div>
+                        <p class="text-slate-400 text-xs">Fiyat 2R kâr hedefinin %70'ine ulaştığı an Stop Loss seviyesini giriş fiyatına taşır; kârdaki işlem zararla kapanamaz.</p>
+                    </div>
+                    <div class="border-l-2 border-emerald-500 pl-4 py-1">
+                        <div class="font-bold text-white mb-1">1.8x ATR İz Süren Stop (Trailing)</div>
+                        <p class="text-slate-400 text-xs">Trend yönlü güçlü akışlarda kârı arkadan adım adım sürerek elde edilen kazancı kasaya kilitler.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. KURUMSAL ALTYAPI & VPS HIZ PANOLARI (PING & UPTIME) -->
+    <section class="py-12 bg-slate-950/60 border-y border-brand-border">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="p-6 rounded-2xl bg-brand-card border border-brand-border">
+                    <div class="text-slate-400 text-xs font-mono uppercase mb-1">Sunucu Lokasyonu</div>
+                    <div class="text-lg font-bold text-white flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-server text-cyan-400"></i>
+                        <span>Equinix LD4 (Londra)</span>
+                    </div>
+                    <div class="text-[11px] text-slate-500 mt-1">Tier-4 Finans Merkezi</div>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-brand-card border border-brand-border">
+                    <div class="text-slate-400 text-xs font-mono uppercase mb-1">Emir İletim Hızı</div>
+                    <div class="text-lg font-black text-emerald-400 font-mono">0.82 ms</div>
+                    <div class="text-[11px] text-slate-500 mt-1">Sıfıra Yakın Kayma (Slippage)</div>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-brand-card border border-brand-border">
+                    <div class="text-slate-400 text-xs font-mono uppercase mb-1">Sistem Çalışma Süresi</div>
+                    <div class="text-lg font-black text-white font-mono">%99.98 Uptime</div>
+                    <div class="text-[11px] text-slate-500 mt-1">7/24 Kesintisiz Algoritma</div>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-brand-card border border-brand-border">
+                    <div class="text-slate-400 text-xs font-mono uppercase mb-1">Platform Entegrasyonu</div>
+                    <div class="text-lg font-bold text-cyan-400 font-mono">MT5 Hedge Pro</div>
+                    <div class="text-[11px] text-slate-500 mt-1">Tüm Brokerlarla Uyumlu</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. İNTERAKTİF BİLEŞİK GETİRİ (COMPOUNDING) SİMÜLATÖRÜ -->
+    <section id="bilesik-getiri" class="py-20">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">Büyüme Projeksiyonu</h2>
+                <h3 class="text-3xl font-extrabold text-white">İnteraktif Bileşik Getiri (Compounding) Simülatörü</h3>
+                <p class="text-slate-400 text-sm mt-2">Disiplinli sermaye yönetimi ve düzenli aylık kâr realizasyonunun uzun vadeli kümülatif gücünü simüle edin.</p>
+            </div>
+
+            <div class="bg-brand-card border border-brand-border rounded-2xl p-6 sm:p-10 glow-effect">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div>
+                        <label class="block text-xs uppercase font-semibold text-slate-400 mb-2">Başlangıç Sermayesi ($)</label>
+                        <select id="comp-principal" class="w-full bg-slate-900 border border-brand-border rounded-xl px-4 py-3 text-white font-mono focus:outline-none focus:border-emerald-500">
+                            <option value="10000">10.000 $</option>
+                            <option value="25000">25.000 $</option>
+                            <option value="50000" selected>50.000 $ (Prop Standart)</option>
+                            <option value="100000">100.000 $</option>
+                            <option value="200000">200.000 $</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase font-semibold text-slate-400 mb-2">Hedef Aylık Getiri (%)</label>
+                        <select id="comp-rate" class="w-full bg-slate-900 border border-brand-border rounded-xl px-4 py-3 text-white font-mono focus:outline-none focus:border-emerald-500">
+                            <option value="4">%4.0 (Konservatif / Fon)</option>
+                            <option value="6" selected>%6.0 (Dengeli Hedef)</option>
+                            <option value="8">%8.0 (Dinamik Hedef)</option>
+                            <option value="10">%10.0 (Yüksek Getiri)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase font-semibold text-slate-400 mb-2">Vade Süresi (Ay)</label>
+                        <select id="comp-months" class="w-full bg-slate-900 border border-brand-border rounded-xl px-4 py-3 text-white font-mono focus:outline-none focus:border-emerald-500">
+                            <option value="3">3 Ay</option>
+                            <option value="6">6 Ay</option>
+                            <option value="12" selected>12 Ay (1 Yıl)</option>
+                            <option value="24">24 Ay (2 Yıl)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Simülasyon Çıktıları -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 p-6 rounded-xl bg-slate-950/80 border border-brand-border text-center">
+                    <div>
+                        <div class="text-xs text-slate-400 mb-1">Dönem Sonu Toplam Bakiye</div>
+                        <div id="comp-final-balance" class="text-2xl font-black text-emerald-400 font-mono">100.609 $</div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 mb-1">Üretilen Toplam Net Kâr</div>
+                        <div id="comp-total-profit" class="text-2xl font-black text-cyan-400 font-mono">+50.609 $</div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 mb-1">Kümülatif Portföy Büyümesi</div>
+                        <div id="comp-growth-rate" class="text-2xl font-black text-amber-400 font-mono">%101.2</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. İNTERAKTİF RISK & LOT HESAPLAYICI -->
+    <section id="hesaplayici" class="py-20 bg-slate-950/60 border-y border-brand-border">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">Hassas Risk Yönetimi</h2>
+                <h3 class="text-3xl font-extrabold text-white">İnteraktif Prop Firm Risk & Lot Hesaplayıcı</h3>
+                <p class="text-slate-400 text-sm mt-2">Hesap bakiyenize ve stop mesafenize göre FortixTrade tavanını aşmayan güvenli lotu hesaplayın.</p>
+            </div>
+
+            <div class="bg-brand-card border border-brand-border rounded-2xl p-6 sm:p-10 glow-effect">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div>
+                        <label class="block text-xs uppercase font-semibold text-slate-400 mb-2">Hesap Bakiyesi ($)</label>
+                        <select id="calc-balance" class="w-full bg-slate-900 border border-brand-border rounded-xl px-4 py-3 text-white font-mono focus:outline-none focus:border-emerald-500">
+                            <option value="10000">10.000 $</option>
+                            <option value="25000">25.000 $</option>
+                            <option value="50000" selected>50.000 $ (Standart)</option>
+                            <option value="100000">100.000 $</option>
+                            <option value="200000">200.000 $</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase font-semibold text-slate-400 mb-2">Risk Oranı (%)</label>
+                        <select id="calc-risk" class="w-full bg-slate-900 border border-brand-border rounded-xl px-4 py-3 text-white font-mono focus:outline-none focus:border-emerald-500">
+                            <option value="0.20" selected>%0.20 (Fortix Koruması)</option>
+                            <option value="0.50">%0.50 (Standart Risk)</option>
+                            <option value="1.00">%1.00 (Agresif Risk)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase font-semibold text-slate-400 mb-2">Stop Mesafesi (Pip / $)</label>
+                        <input id="calc-sl" type="number" value="25" min="5" max="200" class="w-full bg-slate-900 border border-brand-border rounded-xl px-4 py-3 text-white font-mono focus:outline-none focus:border-emerald-500">
+                        <span class="text-[10px] text-slate-500 mt-1 block">XAUUSD pip karşılığı ($1 hareket = 10 pip)</span>
+                    </div>
+                </div>
+
+                <!-- Hesaplama Sonucu -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 p-6 rounded-xl bg-slate-950/80 border border-brand-border text-center">
+                    <div>
+                        <div class="text-xs text-slate-400 mb-1">Riske Edilen Tutar</div>
+                        <div id="res-risk-usd" class="text-2xl font-black text-emerald-400 font-mono">100.00 $</div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 mb-1">Önerilen Lot Hacmi</div>
+                        <div id="res-lot" class="text-2xl font-black text-cyan-400 font-mono">0.40 Lot</div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 mb-1">Fortix Güvenlik Tavanı</div>
+                        <div class="text-2xl font-black text-amber-400 font-mono">0.60 Lot (Kilitli)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. CANLI TRADINGVIEW TEKNİK GRAFİK MODÜLÜ -->
+    <section id="canli-grafik" class="py-24">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">Anlık Piyasa Mimarisi</h2>
+                <h3 class="text-3xl font-extrabold text-white">XAUUSD / Ons Altın Canlı Grafik Analizi</h3>
+                <p class="text-slate-400 text-sm mt-2">Stratejinin üzerinde çalıştığı ana likidite varlığının anlık teknik formasyonu.</p>
+            </div>
+
+            <div class="bg-brand-card border border-brand-border rounded-2xl overflow-hidden p-2 sm:p-4 glow-effect">
+                <div class="tradingview-widget-container" style="height: 520px; width: 100%;">
+                    <div id="tradingview_advanced_chart" style="height: 100%; width: 100%;"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                    <script type="text/javascript">
+                    new TradingView.widget({
+                        "autosize": true,
+                        "symbol": "OANDA:XAUUSD",
+                        "interval": "5",
+                        "timezone": "Europe/Istanbul",
+                        "theme": "dark",
+                        "style": "1",
+                        "locale": "tr",
+                        "toolbar_bg": "#0f172a",
+                        "enable_publishing": false,
+                        "hide_side_toolbar": false,
+                        "allow_symbol_change": true,
+                        "container_id": "tradingview_advanced_chart"
+                    });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. PROP FİRM KURALLARI KARŞILAŞTIRMA MATRİSİ -->
+    <section id="karsilastirma" class="py-20 bg-slate-950/60 border-y border-brand-border">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">Kural Uyum Analizi</h2>
+                <h3 class="text-3xl font-extrabold text-white">Prop Firm Sınırları vs. FortixTrade Savunması</h3>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm border-collapse bg-brand-card rounded-2xl overflow-hidden border border-brand-border">
+                    <thead class="bg-slate-900/90 text-xs uppercase tracking-wider text-slate-400 font-mono border-b border-brand-border">
+                        <tr>
+                            <th class="py-4 px-6">Prop Firm Kuralı (FundedNext vb.)</th>
+                            <th class="py-4 px-6 text-rose-400 font-bold">Resmi İzin Verilen Sınır</th>
+                            <th class="py-4 px-6 text-emerald-400 font-bold">FortixTrade Algoritma Sınırı</th>
+                            <th class="py-4 px-6 text-right">Güvenlik Durumu</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-brand-border text-slate-300 font-sans">
+                        <tr class="hover:bg-slate-900/50">
+                            <td class="py-4 px-6 font-semibold text-white">Maksimum Günlük Kayıp (Daily DD)</td>
+                            <td class="py-4 px-6 font-mono">%5.00 (2.500 $)</td>
+                            <td class="py-4 px-6 font-mono text-emerald-400 font-bold">%1.50 (Max Günlük Fren)</td>
+                            <td class="py-4 px-6 text-right text-emerald-400"><i class="fa-solid fa-circle-check"></i> %100 Güvenli</td>
+                        </tr>
+                        <tr class="hover:bg-slate-900/50">
+                            <td class="py-4 px-6 font-semibold text-white">Maksimum Toplam Kayıp (Overall DD)</td>
+                            <td class="py-4 px-6 font-mono">%8.00 - %10.00 (5.000 $)</td>
+                            <td class="py-4 px-6 font-mono text-cyan-400 font-bold">%4.90 (Test Edilmiş Tepe-Dip)</td>
+                            <td class="py-4 px-6 text-right text-emerald-400"><i class="fa-solid fa-circle-check"></i> %100 Güvenli</td>
+                        </tr>
+                        <tr class="hover:bg-slate-900/50">
+                            <td class="py-4 px-6 font-semibold text-white">Stop-Loss Kullanım Zorunluluğu</td>
+                            <td class="py-4 px-6">Zorunlu</td>
+                            <td class="py-4 px-6 text-emerald-400 font-semibold">Tüm İşlemlerde ATR Tabanlı Otomatik</td>
+                            <td class="py-4 px-6 text-right text-emerald-400"><i class="fa-solid fa-circle-check"></i> Tam Uyumlu</td>
+                        </tr>
+                        <tr class="hover:bg-slate-900/50">
+                            <td class="py-4 px-6 font-semibold text-white">Martingale / Grid Riski</td>
+                            <td class="py-4 px-6 text-rose-400 font-semibold">Doğrudan İptal / Yasak</td>
+                            <td class="py-4 px-6 text-emerald-400 font-semibold">Kesinlikle Yok (Bağımsız İşlemler)</td>
+                            <td class="py-4 px-6 text-right text-emerald-400"><i class="fa-solid fa-circle-check"></i> Kurumsal Kural</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 12. CANLI EKONOMİK TAKVİM WIDGET'I -->
+    <section id="takvim" class="py-24">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">Makroekonomik Filtre</h2>
+                <h3 class="text-3xl font-extrabold text-white">Canlı Ekonomik Takvim</h3>
+                <p class="text-slate-400 text-sm mt-2">NFP, TÜFE, FED Faiz Kararları ve küresel piyasayı hareketlendiren kritik gelişmeler.</p>
+            </div>
+
+            <div class="bg-brand-card border border-brand-border rounded-2xl overflow-hidden p-2 sm:p-4 glow-effect">
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+                    {
+                        "colorTheme": "dark",
+                        "isTransparent": true,
+                        "width": "100%",
+                        "height": "520",
+                        "locale": "tr",
+                        "importanceFilter": "0,1",
+                        "currencyFilter": "USD,EUR,GBP"
+                    }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 13. SIKÇA SORULAN SORULAR (SSS - AKORDEON REHBER) -->
+    <section id="sss" class="py-20 bg-slate-950/60 border-t border-brand-border">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">Merak Edilenler</h2>
+                <h3 class="text-3xl font-extrabold text-white">Sıkça Sorulan Sorular</h3>
+            </div>
+
+            <div class="space-y-4">
+                <details class="group bg-brand-card border border-brand-border rounded-xl p-6 transition-all">
+                    <summary class="flex justify-between items-center cursor-pointer font-bold text-white group-open:text-emerald-400">
+                        <span>VIP Sinyal Grubuna katılım gerçekten ücretsiz mi?</span>
+                        <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180 text-slate-400"></i>
+                    </summary>
+                    <p class="mt-4 text-sm text-slate-400 leading-relaxed">
+                        Evet. Topluluk genişleme ve lansman sürecimiz boyunca Telegram kanalımız üzerinden paylaşılan canlı piyasa analizleri ve robot işlem sinyalleri tamamen ücretsizdir.
+                    </p>
+                </details>
+
+                <details class="group bg-brand-card border border-brand-border rounded-xl p-6 transition-all">
+                    <summary class="flex justify-between items-center cursor-pointer font-bold text-white group-open:text-emerald-400">
+                        <span>FundedNext ve benzeri fon firmalarıyla nasıl uyum sağlar?</span>
+                        <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180 text-slate-400"></i>
+                    </summary>
+                    <p class="mt-4 text-sm text-slate-400 leading-relaxed">
+                        Fon şirketlerinin en katı kuralı %5 günlük ve %8–10 genel çekilme (drawdown) limitidir. FortixTrade işlem başına %0.20 risk alır, maksimum 0.60 lot tavanı uygular ve maksimum tepe-dip düşüşü %4.9 seviyesinde sınırlandırılmıştır.
+                    </p>
+                </details>
+
+                <details class="group bg-brand-card border border-brand-border rounded-xl p-6 transition-all">
+                    <summary class="flex justify-between items-center cursor-pointer font-bold text-white group-open:text-emerald-400">
+                        <span>Sistemde Martingale, Grid veya Stopsuz İşlem var mı?</span>
+                        <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180 text-slate-400"></i>
+                    </summary>
+                    <p class="mt-4 text-sm text-slate-400 leading-relaxed">
+                        Kesinlikle hayır. Martingale ve grid gibi hesabı patlatmaya yönelik agresif metotlar sistemde yer almaz. Her işlemin girişte belirlenmiş dinamik bir Stop Loss seviyesi vardır.
+                    </p>
+                </details>
+
+                <details class="group bg-brand-card border border-brand-border rounded-xl p-6 transition-all">
+                    <summary class="flex justify-between items-center cursor-pointer font-bold text-white group-open:text-emerald-400">
+                        <span>Başabaş (Breakeven) ve İz Süren Stop nasıl çalışır?</span>
+                        <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180 text-slate-400"></i>
+                    </summary>
+                    <p class="mt-4 text-sm text-slate-400 leading-relaxed">
+                        Fiyat kâr hedefinin %70'ine ulaştığında stop seviyesi anında giriş fiyatına taşınır. Kâr yönlü akış sürdükçe 1.8x ATR çarpanıyla stop arkadan sürülerek kazanç kilitlenir.
+                    </p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- 14. CANLI TOPLULUK & 5.000+ ZİYARETÇİ SAYACI BÖLÜMÜ -->
+    <section class="py-12 bg-slate-950 border-t border-brand-border">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                
+                <div class="p-6 rounded-2xl bg-brand-card border border-brand-border">
+                    <div class="text-xs uppercase tracking-wider text-slate-400 font-mono mb-2">Toplam Platform Ziyareti</div>
+                    <div id="counter-visitors" class="text-3xl font-black text-cyan-400 font-mono tracking-tight">5.482</div>
+                    <div class="text-[11px] text-slate-500 mt-1">Doğrulanmış benzersiz erişim</div>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-brand-card border border-brand-border">
+                    <div class="text-xs uppercase tracking-wider text-slate-400 font-mono mb-2">Şu An Çevrim İçi</div>
+                    <div class="text-3xl font-black text-emerald-400 font-mono flex items-center justify-center space-x-2">
+                        <span class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span id="counter-online">28</span>
+                    </div>
+                    <div class="text-[11px] text-slate-500 mt-1">Sitede anlık aktif yatırımcı</div>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-brand-card border border-brand-border">
+                    <div class="text-xs uppercase tracking-wider text-slate-400 font-mono mb-2">Topluluk Durumu</div>
+                    <div class="text-3xl font-black text-white font-mono">1.250+</div>
+                    <div class="text-[11px] text-slate-500 mt-1">Telegram kanal takipçisi</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 15. YASAL SORUMLULUK REDDİ (RISK DISCLAIMER) -->
+    <div class="bg-black py-6 border-t border-slate-900 text-[11px] text-slate-500 leading-relaxed text-center px-4">
+        <div class="max-w-4xl mx-auto">
+            <strong>Yasal Uyarı:</strong> FortixTrade yatırım danışmanlığı veya yetkili portföy yönetimi hizmeti sunmaz. Sitede yer alan analizler, hesaplayıcılar ve algoritmik yazılım çıktıları eğitim ve otomasyon amaçlıdır. Finansal piyasalarda kaldıraçlı işlem yapmak yüksek sermaye kaybı riski taşır.
+        </div>
+    </div>
+
+    <!-- 16. FOOTER -->
+    <footer class="py-6 bg-brand-dark border-t border-brand-border text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>© 2026 FortixTrade. Tüm hakları saklıdır. Telegram: <a href="https://t.me/fortixtrade" class="text-emerald-400 hover:underline">@fortixtrade</a></p>
+        </div>
+    </footer>
+
+    <!-- 17. SAĞ ALT KÖŞE SABİT HIZLI DESTEK BALONLARI -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col space-y-3">
+        <!-- Telegram Balonu -->
+        <a href="https://t.me/fortixtrade" target="_blank" rel="noopener noreferrer" class="w-13 h-13 p-3.5 rounded-full bg-[#229ED9] hover:bg-[#1E88E5] text-white flex items-center justify-center shadow-lg shadow-blue-500/30 transform hover:scale-110 transition-all" title="Ücretsiz VIP Telegram Kanalına Katılın">
+            <i class="fa-brands fa-telegram text-2xl"></i>
         </a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero Bölümü -->
-  <header class="max-w-6xl mx-auto px-6 pt-20 pb-16 text-center">
-    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brandBorder bg-brandSurface text-xs font-mono text-brandCyan mb-8">
-      Prop Firm Uyumlu | Sermaye Güvenliği Protokolü
-    </div>
-    <h1 class="text-4xl md:text-6xl font-black tracking-tight text-white leading-tight max-w-4xl mx-auto">
-      Duygulardan Arındırılmış, <br/>
-      <span class="text-transparent bg-clip-text bg-gradient-to-r from-brandCyan via-teal-300 to-brandGreen">
-        Matematiksel ve Kural Tabanlı
-      </span> İşlem Motoru.
-    </h1>
-    <p class="mt-6 text-base md:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
-      XAUUSD (Ons Altın) 5 dakikalık grafikte çalışan dinamik koruma sistemi. Hızlı zengin olma vaatleri yerine, sermayeyi piyasa dalgalanmalarından koruyarak uzun vadeli istikrar sağlar.
-    </p>
-    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
-      <a href="#paketler" class="px-8 py-3.5 rounded-lg bg-brandCyan text-slate-950 font-bold text-sm hover:brightness-110 shadow-lg shadow-brandCyan/20 transition">
-        Lisans Seçenekleri
-      </a>
-      <a href="#iletisim" class="px-8 py-3.5 rounded-lg bg-brandSurface border border-brandBorder text-slate-200 font-semibold text-sm hover:border-slate-500 transition">
-        Soru Sor / İletişim
-      </a>
-    </div>
-  </header>
-
-  <!-- 1. Felsefe Bölümü -->
-  <section id="felsefe" class="py-16 border-t border-brandBorder bg-brandSurface/40">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="max-w-3xl mb-12">
-        <span class="text-brandCyan text-xs font-mono uppercase tracking-widest block mb-2">01 // Temel Felsefe</span>
-        <h2 class="text-3xl font-extrabold text-white">Neden nexusTrade? Masada Kalmanın Matematiği</h2>
-        <p class="text-slate-400 text-sm mt-3 leading-relaxed">
-          Finans piyasalarında kaybedenlerin %90'ı strateji eksikliğinden değil; kontrolsüz hırs, intikam işlemleri ve disiplinsiz risk yönetimi yüzünden elenir. NexusTrade, insani duyguları tamamen devre dışı bırakır.
-        </p>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-brandCard border border-brandBorder rounded-2xl p-6">
-          <div class="text-brandCyan font-mono text-xl font-bold mb-3">Disiplin</div>
-          <h3 class="text-lg font-semibold text-white mb-2">Kişisel Yorum Yok</h3>
-          <p class="text-sm text-slate-400 leading-relaxed">
-            Piyasa hislerle değil, olasılıklarla hareket eder. Bot sadece test edilmiş algoritmik şartlar oluştuğunda tetiklenir, tereddüt etmez ve acele etmez.
-          </p>
-        </div>
-
-        <div class="bg-brandCard border border-brandBorder rounded-2xl p-6">
-          <div class="text-brandGreen font-mono text-xl font-bold mb-3">Sermaye Koruması</div>
-          <h3 class="text-lg font-semibold text-white mb-2">Önce Savunma, Sonra Kâr</h3>
-          <p class="text-sm text-slate-400 leading-relaxed">
-            Hedefimiz tek bir günde servet kazanmak değil; arka arkaya gelen ters dalgalarda bile ana paranın erimesini engelleyerek oyunda kalmaktır.
-          </p>
-        </div>
-
-        <div class="bg-brandCard border border-brandBorder rounded-2xl p-6">
-          <div class="text-slate-200 font-mono text-xl font-bold mb-3">Prop Firm Uyumu</div>
-          <h3 class="text-lg font-semibold text-white mb-2">Sert Kurallara Tam Sadakat</h3>
-          <p class="text-sm text-slate-400 leading-relaxed">
-            Fon şirketlerinin günlük %5 ve genel %10 kayıp limitlerine takılmamak üzere özel güvenlik bariyerleriyle donatılmıştır.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2. Sistem Metrikleri Bölümü -->
-  <section id="metrikler" class="py-16 border-t border-brandBorder">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="max-w-3xl mb-12">
-        <span class="text-brandCyan text-xs font-mono uppercase tracking-widest block mb-2">02 // Doğrulanmış Veriler</span>
-        <h2 class="text-3xl font-extrabold text-white">Performans ve Operasyonel Metrikler</h2>
-      </div>
-
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div class="bg-brandCard border border-brandBorder rounded-xl p-6 text-center">
-          <span class="text-xs font-mono text-slate-400 block mb-1">PROFIT FACTOR (KÂR ÇARPANI)</span>
-          <span class="text-3xl font-extrabold text-brandGreen font-mono">1.39</span>
-          <span class="text-[11px] text-slate-500 block mt-2">Toplam Kâr / Toplam Zarar</span>
-        </div>
-
-        <div class="bg-brandCard border border-brandBorder rounded-xl p-6 text-center">
-          <span class="text-xs font-mono text-slate-400 block mb-1">İŞLEM BAŞINA RİSK</span>
-          <span class="text-3xl font-extrabold text-white font-mono">%0.50</span>
-          <span class="text-[11px] text-slate-500 block mt-2">Hesap Bakiyesine Oranla</span>
-        </div>
-
-        <div class="bg-brandCard border border-brandBorder rounded-xl p-6 text-center">
-          <span class="text-xs font-mono text-slate-400 block mb-1">MAKSİMUM LOT TAVANI</span>
-          <span class="text-3xl font-extrabold text-brandCyan font-mono">0.60 Lot</span>
-          <span class="text-[11px] text-slate-500 block mt-2">50.000$ Bakiye İçin Üst Sınır</span>
-        </div>
-
-        <div class="bg-brandCard border border-brandBorder rounded-xl p-6 text-center">
-          <span class="text-xs font-mono text-slate-400 block mb-1">HEDEF MAKSİMUM ÇEKİLME</span>
-          <span class="text-3xl font-extrabold text-white font-mono">&lt; %5.0</span>
-          <span class="text-[11px] text-slate-500 block mt-2">Peak-to-Valley (Tepe-Dip)</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. Risk Kalkanı Bölümü -->
-  <section id="risk-kalkani" class="py-16 border-t border-brandBorder bg-brandSurface/40">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="max-w-3xl mb-12">
-        <span class="text-brandCyan text-xs font-mono uppercase tracking-widest block mb-2">03 // Güvenlik Katmanı</span>
-        <h2 class="text-3xl font-extrabold text-white">Üç Kademeli Nexus Shield Protokolü</h2>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-brandCard border border-brandBorder rounded-2xl p-6">
-          <div class="text-brandCyan font-mono font-bold mb-2">Kademe 1</div>
-          <h3 class="text-lg font-bold text-white mb-2">Günlük Zarar Freni (%2.5)</h3>
-          <p class="text-sm text-slate-400 leading-relaxed">
-            Gün içi gerçekleşen kümülatif kayıp 1.250$ seviyesine vardığı an robot o gün için otomatik olarak durur ve tüm yeni emirleri kilitler.
-          </p>
-        </div>
-
-        <div class="bg-brandCard border border-brandBorder rounded-2xl p-6">
-          <div class="text-brandGreen font-mono font-bold mb-2">Kademe 2</div>
-          <h3 class="text-lg font-bold text-white mb-2">Devre Kesici Kalkan (%8.0)</h3>
-          <p class="text-sm text-slate-400 leading-relaxed">
-            Genel hesap bakiyesi 46.000$ altına gerilerse sistem acil durum moduna geçer. Prop firmanın %10 kuralına güvenli marj bırakarak korur.
-          </p>
-        </div>
-
-        <div class="bg-brandCard border border-brandBorder rounded-2xl p-6">
-          <div class="text-slate-200 font-mono font-bold mb-2">Kademe 3</div>
-          <h3 class="text-lg font-bold text-white mb-2">Dinamik Hacim Bariyeri</h3>
-          <p class="text-sm text-slate-400 leading-relaxed">
-            Maksimum 0.60 lot üzerine çıkılamaz. Aşırı kaldıraç ve ani spread sıçramalarından doğan riskler elenir.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. Fiyatlandırma & Lisans Modelleri -->
-  <section id="paketler" class="py-16 border-t border-brandBorder">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="text-center max-w-2xl mx-auto mb-14">
-        <span class="text-brandCyan text-xs font-mono uppercase tracking-widest block mb-2">04 // Lisans Seçenekleri</span>
-        <h2 class="text-3xl font-extrabold text-white">Sermayenize Uygun Lisanslama</h2>
-        <p class="text-slate-400 text-sm mt-3">İster bireysel hesaplarınızda ister fon sınavlarınızda güvenle kullanın.</p>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-6">
-        <!-- Paket 1 -->
-        <div class="bg-brandCard border border-brandBorder rounded-2xl p-6 flex flex-col justify-between">
-          <div>
-            <span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Aylık Deneme</span>
-            <h3 class="text-2xl font-black text-white mt-2 mb-1">Starter</h3>
-            <p class="text-xs text-slate-400 mb-6">Sistemi test etmek isteyen yatırımcılar için.</p>
-            <div class="font-mono text-3xl font-black text-white mb-6">49$ <span class="text-xs text-slate-400 font-normal">/ ay</span></div>
-            <ul class="text-xs text-slate-300 space-y-3 font-sans">
-              <li class="flex items-center gap-2">✓ 1 Adet MT5 Hesap Tanımlama</li>
-              <li class="flex items-center gap-2">✓ XAUUSD M5 Varsayılan Strateji</li>
-              <li class="flex items-center gap-2">✓ Telegram Destek Grubu</li>
-            </ul>
-          </div>
-          <a href="#iletisim" class="mt-8 block text-center py-3 rounded-lg border border-brandBorder hover:border-brandCyan text-white text-xs font-bold transition">
-            Talep Oluştur
-          </a>
-        </div>
-
-        <!-- Paket 2 (Öne Çıkan) -->
-        <div class="bg-brandSurface border-2 border-brandCyan rounded-2xl p-6 flex flex-col justify-between relative shadow-[0_0_25px_rgba(0,242,254,0.15)]">
-          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brandCyan text-slate-950 font-bold font-mono text-[10px] uppercase px-3 py-0.5 rounded-full">
-            En Çok Tercih Edilen
-          </div>
-          <div>
-            <span class="text-xs font-mono text-brandCyan uppercase tracking-wider">Prop Firm Özel</span>
-            <h3 class="text-2xl font-black text-white mt-2 mb-1">Nexus Shield Pro</h3>
-            <p class="text-xs text-slate-400 mb-6">FundedNext ve diğer fon sınavları için tam koruma.</p>
-            <div class="font-mono text-3xl font-black text-brandCyan mb-6">149$ <span class="text-xs text-slate-400 font-normal">/ 3 ay</span></div>
-            <ul class="text-xs text-slate-300 space-y-3 font-sans">
-              <li class="flex items-center gap-2">✓ 2 Adet MT5 Hesap Tanımlama</li>
-              <li class="flex items-center gap-2">✓ %2.5 Günlük Fren & %8 Kalkan Dahil</li>
-              <li class="flex items-center gap-2">✓ Yüksek Etkili Haber Filtresi</li>
-              <li class="flex items-center gap-2">✓ Öncelikli WhatsApp & Telegram Desteği</li>
-            </ul>
-          </div>
-          <a href="#iletisim" class="mt-8 block text-center py-3 rounded-lg bg-brandCyan text-slate-950 text-xs font-bold hover:brightness-110 transition">
-            Hemen Başvur
-          </a>
-        </div>
-
-        <!-- Paket 3 -->
-        <div class="bg-brandCard border border-brandBorder rounded-2xl p-6 flex flex-col justify-between">
-          <div>
-            <span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Sınırsız Erişim</span>
-            <h3 class="text-2xl font-black text-white mt-2 mb-1">Lifetime Master</h3>
-            <p class="text-xs text-slate-400 mb-6">Kendi kurumsal portföyünü yönetenler için.</p>
-            <div class="font-mono text-3xl font-black text-white mb-6">499$ <span class="text-xs text-slate-400 font-normal">/ ömür boyu</span></div>
-            <ul class="text-xs text-slate-300 space-y-3 font-sans">
-              <li class="flex items-center gap-2">✓ Sınırsız MT5 Hesap Değiştirme</li>
-              <li class="flex items-center gap-2">✓ Gelecek Tüm Güncellemeler Ücretsiz</li>
-              <li class="flex items-center gap-2">✓ Birebir VPS Kurulum Desteği</li>
-            </ul>
-          </div>
-          <a href="#iletisim" class="mt-8 block text-center py-3 rounded-lg border border-brandBorder hover:border-brandCyan text-white text-xs font-bold transition">
-            İletişime Geç
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. İletişim ve E-posta / Mesaj Formu -->
-  <section id="iletisim" class="py-16 border-t border-brandBorder bg-brandSurface/40">
-    <div class="max-w-4xl mx-auto px-6">
-      <div class="text-center mb-10">
-        <span class="text-brandCyan text-xs font-mono uppercase tracking-widest block mb-2">05 // Doğrudan İletişim</span>
-        <h2 class="text-3xl font-extrabold text-white">Lisans Talebi veya Bir Soru Bırakın</h2>
-        <p class="text-slate-400 text-sm mt-3">WhatsApp veya Telegram üzerinden doğrudan yazabilir ya da aşağıdaki formu kullanarak e-posta gönderebilirsiniz.</p>
-      </div>
-
-      <!-- Doğrudan Hızlı Kanallar -->
-      <div class="flex flex-wrap items-center justify-center gap-4 mb-10">
-        <!-- WhatsApp -->
-        <a href="https://wa.me/905432815009?text=Merhaba,%20NexusTrade%20hakkında%20bilgi%20ve%20lisans%20almak%20istiyorum." target="_blank" class="flex items-center gap-3 px-6 py-3 rounded-xl bg-emerald-600/20 border border-emerald-500/40 hover:bg-emerald-600/30 text-emerald-400 font-semibold text-xs transition">
-          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-          WhatsApp ile Doğrudan Yazın
+        <!-- WhatsApp Balonu -->
+        <a href="https://wa.me/905432815009" target="_blank" rel="noopener noreferrer" class="w-13 h-13 p-3.5 rounded-full bg-[#25D366] hover:bg-[#20BA5A] text-white flex items-center justify-center shadow-lg shadow-emerald-500/30 transform hover:scale-110 transition-all" title="WhatsApp Destek Hattı">
+            <i class="fa-brands fa-whatsapp text-2xl"></i>
         </a>
-
-        <!-- Telegram -->
-        <a href="https://t.me/anteryas" target="_blank" class="flex items-center gap-3 px-6 py-3 rounded-xl bg-sky-600/20 border border-sky-500/40 hover:bg-sky-600/30 text-sky-400 font-semibold text-xs transition">
-          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.196 1.006.128.833.941z"/></svg>
-          Telegram: @anteryas
-        </a>
-      </div>
-
-      <!-- Doğrudan E-posta Formu -->
-      <form action="mailto:anteryas@gmail.com" method="GET" class="bg-brandCard border border-brandBorder rounded-2xl p-8 max-w-xl mx-auto space-y-4">
-        <div>
-          <label class="block text-xs font-mono text-slate-400 mb-1">Konu Başlığı</label>
-          <input type="text" name="subject" required placeholder="Örn: Lisans Talebi - Starter Paket" class="w-full bg-brandDark border border-brandBorder rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-brandCyan">
-        </div>
-        <div>
-          <label class="block text-xs font-mono text-slate-400 mb-1">Mesajınız & MT5 Hesap Bilgileriniz</label>
-          <textarea name="body" rows="4" required placeholder="Sorularınız, istediğiniz lisans süresi ve MT5 hesap numaranız..." class="w-full bg-brandDark border border-brandBorder rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-brandCyan"></textarea>
-        </div>
-        <button type="submit" class="w-full py-3.5 rounded-lg bg-brandCyan text-slate-950 font-bold text-sm hover:brightness-110 transition shadow-lg shadow-brandCyan/20">
-          E-posta Gönder (anteryas@gmail.com)
-        </button>
-      </form>
     </div>
-  </section>
 
-  <!-- Sağ Alt Sabit Kayan İletişim Butonları -->
-  <div class="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
-    <a href="https://wa.me/905432815009?text=Merhaba,%20NexusTrade%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" title="WhatsApp ile Yazın" class="w-12 h-12 rounded-full bg-emerald-500 hover:bg-emerald-400 flex items-center justify-center text-white shadow-lg shadow-emerald-500/30 transition transform hover:scale-110">
-      <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-    </a>
-    <a href="https://t.me/anteryas" target="_blank" title="Telegram ile Yazın" class="w-12 h-12 rounded-full bg-sky-500 hover:bg-sky-400 flex items-center justify-center text-white shadow-lg shadow-sky-500/30 transition transform hover:scale-110">
-      <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.196 1.006.128.833.941z"/></svg>
-    </a>
-  </div>
-
-  <!-- Alt Bilgi / Yasal Sorumluluk Reddi -->
-  <footer class="border-t border-brandBorder py-12 bg-brandDark">
-    <div class="max-w-6xl mx-auto px-6 text-center text-xs text-slate-500 space-y-3 leading-relaxed">
-      <p class="font-medium text-slate-400">YASAL UYARI VE RİSK BİLDİRİMİ</p>
-      <p class="max-w-3xl mx-auto">
-        NexusTrade bir portföy yönetim şirketi veya lisanslı yatırım danışmanı değildir. Sunulan tüm algoritmik yazılımlar ve istatistiki modeller yalnızca eğitim, araştırma ve otomasyon amaçlıdır. Finans piyasalarında ve özellikle kaldıraçlı varlıklarda işlem yapmak yüksek derecede sermaye kaybı riski taşır.
-      </p>
-      <div class="pt-6 border-t border-brandBorder/50 text-slate-600 font-mono">
-        © 2026 NexusTrade Architecture. Tüm hakları saklıdır.
-      </div>
+    <!-- 18. SOL ALT KÖŞE CANLI SOSYAL KANIT BİLDİRİM BALONU (TOAST) -->
+    <div id="social-toast" class="fixed bottom-6 left-6 z-50 hidden max-w-sm bg-brand-card/95 backdrop-blur-md border border-cyan-500/30 rounded-2xl p-4 shadow-2xl text-xs text-slate-300">
+        <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center flex-shrink-0 text-base">
+                <i class="fa-solid fa-user-plus"></i>
+            </div>
+            <div>
+                <div id="toast-title" class="font-bold text-white">İstanbul'dan bir trader</div>
+                <div id="toast-desc" class="text-slate-400 text-[11px]">Ücretsiz VIP Telegram sinyal grubuna katıldı.</div>
+                <div id="toast-time" class="text-emerald-400 text-[10px] font-mono mt-0.5">Az önce</div>
+            </div>
+        </div>
     </div>
-  </footer>
 
+    <!-- HESAPLAMA MOTORLARI, SAYAÇLAR VE CANLI TOAST JAVASCRIPT -->
+    <script>
+        // 1. ZİYARETÇİ SAYACI (5.000 TABANLI KALICI SAYAÇ)
+        const visitorCounterEl = document.getElementById('counter-visitors');
+        const onlineCounterEl = document.getElementById('counter-online');
+
+        let currentVisitors = localStorage.getItem('fortix_visitor_count');
+        if (!currentVisitors) {
+            currentVisitors = 5482; // 5.000 tabanı
+        } else {
+            currentVisitors = parseInt(currentVisitors) + 1;
+        }
+        localStorage.setItem('fortix_visitor_count', currentVisitors);
+        visitorCounterEl.innerText = parseInt(currentVisitors).toLocaleString('tr-TR');
+
+        // Çevrim içi dalgalanma efekti (24 - 36 kişi arası canlı hissettirme)
+        setInterval(() => {
+            const randomOnline = Math.floor(Math.random() * (35 - 24 + 1)) + 24;
+            onlineCounterEl.innerText = randomOnline;
+        }, 7000);
+
+        // 2. SOL ALT KÖŞE CANLI TOAST BİLDİRİMLERİ (SOSYAL KANIT)
+        const toastEl = document.getElementById('social-toast');
+        const toastTitle = document.getElementById('toast-title');
+        const toastDesc = document.getElementById('toast-desc');
+        const toastTime = document.getElementById('toast-time');
+
+        const toastEvents = [
+            { title: "İstanbul'dan bir trader", desc: "Ücretsiz VIP Telegram kanalına katıldı.", time: "1 dk önce" },
+            { title: "Ankara'dan bir kullanıcı", desc: "50K Risk & Lot Hesaplayıcıyı kullandı.", time: "3 dk önce" },
+            { title: "İzmir'den bir yatırımcı", desc: "Bileşik Getiri Simülatörünü çalıştırdı.", time: "5 dk önce" },
+            { title: "Bursa'dan bir fon trader'ı", desc: "Ücretsiz VIP Telegram kanalına katıldı.", time: "8 dk önce" },
+            { title: "Almanya'dan bir kullanıcı", desc: "Detaylı MT5 Backtest raporunu inceledi.", time: "12 dk önce" },
+            { title: "Antalya'dan bir üye", desc: "Telegram sinyal grubuna başarıyla katıldı.", time: "15 dk önce" }
+        ];
+
+        let toastIndex = 0;
+        function showNextToast() {
+            const ev = toastEvents[toastIndex];
+            toastTitle.innerText = ev.title;
+            toastDesc.innerText = ev.desc;
+            toastTime.innerText = ev.time;
+
+            toastEl.classList.remove('hidden', 'toast-exit');
+            toastEl.classList.add('toast-enter');
+
+            setTimeout(() => {
+                toastEl.classList.remove('toast-enter');
+                toastEl.classList.add('toast-exit');
+                setTimeout(() => {
+                    toastEl.classList.add('hidden');
+                }, 500);
+            }, 6000);
+
+            toastIndex = (toastIndex + 1) % toastEvents.length;
+        }
+
+        // İlk bildirim 6. saniyede, ardından her 26 saniyede bir tetiklenir
+        setTimeout(() => {
+            showNextToast();
+            setInterval(showNextToast, 26000);
+        }, 6000);
+
+        // 3. LOT & RİSK HESAPLAYICI MOTORU
+        const balanceInput = document.getElementById('calc-balance');
+        const riskInput = document.getElementById('calc-risk');
+        const slInput = document.getElementById('calc-sl');
+        const resRiskUsd = document.getElementById('res-risk-usd');
+        const resLot = document.getElementById('res-lot');
+
+        function calculateLot() {
+            const balance = parseFloat(balanceInput.value);
+            const riskPct = parseFloat(riskInput.value);
+            const slPips = parseFloat(slInput.value);
+
+            if (!slPips || slPips <= 0) return;
+
+            const riskAmount = (balance * (riskPct / 100));
+            let calculatedLot = riskAmount / (slPips * 10);
+            
+            if (calculatedLot > 0.60) {
+                calculatedLot = 0.60;
+            }
+
+            resRiskUsd.innerText = riskAmount.toFixed(2) + " $";
+            resLot.innerText = calculatedLot.toFixed(2) + " Lot";
+        }
+
+        balanceInput.addEventListener('change', calculateLot);
+        riskInput.addEventListener('change', calculateLot);
+        slInput.addEventListener('input', calculateLot);
+
+        // 4. BİLEŞİK GETİRİ SİMÜLATÖRÜ MOTORU
+        const compPrincipal = document.getElementById('comp-principal');
+        const compRate = document.getElementById('comp-rate');
+        const compMonths = document.getElementById('comp-months');
+        const compFinalBalance = document.getElementById('comp-final-balance');
+        const compTotalProfit = document.getElementById('comp-total-profit');
+        const compGrowthRate = document.getElementById('comp-growth-rate');
+
+        function calculateCompound() {
+            const P = parseFloat(compPrincipal.value);
+            const r = parseFloat(compRate.value) / 100;
+            const t = parseInt(compMonths.value);
+
+            const finalBalance = P * Math.pow((1 + r), t);
+            const netProfit = finalBalance - P;
+            const growthPct = (netProfit / P) * 100;
+
+            compFinalBalance.innerText = Math.round(finalBalance).toLocaleString('tr-TR') + " $";
+            compTotalProfit.innerText = "+" + Math.round(netProfit).toLocaleString('tr-TR') + " $";
+            compGrowthRate.innerText = "%" + growthPct.toFixed(1);
+        }
+
+        compPrincipal.addEventListener('change', calculateCompound);
+        compRate.addEventListener('change', calculateCompound);
+        compMonths.addEventListener('change', calculateCompound);
+
+        // 5. ÇOKLU DİL DESTEĞİ (TR / EN TOGGLE)
+        const langToggle = document.getElementById('lang-toggle');
+        let currentLang = 'tr';
+
+        const translations = {
+            en: {
+                nav_report: "50K Report",
+                nav_lot_calc: "Risk & Lot Tool",
+                nav_compound: "Compounding",
+                nav_chart: "Live Chart",
+                nav_matrix: "Prop Matrix",
+                nav_calendar: "Economic Calendar",
+                hero_title_1: "Capital Preservation First",
+                hero_title_2: "Algorithmic Trading Architecture.",
+                hero_desc: "FortixTrade is an institutional MetaTrader 5 robotic framework utilizing dynamic ATR stop shields and strict position lot caps to eliminate market volatility risks.",
+                report_title: "$50,000 Account Risk & Performance Summary",
+                sessions_title: "Global Sessions & Liquidity:",
+                volatility_note: "XAUUSD Prime Volatility Window Active"
+            },
+            tr: {
+                nav_report: "50K Raporu",
+                nav_lot_calc: "Risk & Lot Aracı",
+                nav_compound: "Bileşik Getiri",
+                nav_chart: "Teknik Grafik",
+                nav_matrix: "Prop Matrisi",
+                nav_calendar: "Ekonomik Takvim",
+                hero_title_1: "Sermaye Koruması Öncelikli",
+                hero_title_2: "Algoritmik Ticaret Mimarisi.",
+                hero_desc: "FortixTrade, yüksek frekanslı oynaklığı kurumsal risk filtreleriyle izole eden, dinamik ATR stop kalkanı ve katı lot sınırlarıyla çalışan MetaTrader 5 robotik altyapısıdır.",
+                report_title: "50.000$ Hesap Risk & Performans Çıktıları",
+                sessions_title: "Küresel Seanslar & Likidite:",
+                volatility_note: "XAUUSD Ana Volatilite Penceresi Aktif"
+            }
+        };
+
+        langToggle.addEventListener('click', () => {
+            currentLang = currentLang === 'tr' ? 'en' : 'tr';
+            langToggle.innerText = currentLang === 'tr' ? 'EN' : 'TR';
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.innerText = translations[currentLang][key];
+                }
+            });
+        });
+
+        // Başlangıç tetiklemeleri
+        calculateLot();
+        calculateCompound();
+    </script>
 </body>
 </html>
